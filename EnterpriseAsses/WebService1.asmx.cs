@@ -258,6 +258,35 @@ namespace EnterpriseAsses
 
         }
 
+        [WebMethod]
+        public void Currency()
+        {
+            //string region = "Africa";
+
+            //string str = string.Format("https://api.exchangeratesapi.io/latest?base=INR&symbols=USD");
+            string str = string.Format("https://restcountries.eu/rest/v2/all");
+            //string str = string.Format("http://data.fixer.io/api/latest?access_key=d45c2ead2e66ec108083fe9a90eaf39f&base&symbols=USD,AUD,CAD,PLN,MXN");
+
+            HttpWebRequest reqobj = (HttpWebRequest)WebRequest.Create(str);
+           // reqobj.Headers.Add("X-RapidAPI-Key", "e09fb1335dmsheb8f4e795507706p179b69jsn0fb20cfa8d25");
+            reqobj.Method = "GET";
+            reqobj.ContentType = "application/json;charset=utf-8";
+            HttpWebResponse res = null;
+            var response = (HttpWebResponse)reqobj.GetResponse();
+            string result = null;
+            using (Stream stream = (response.GetResponseStream()))
+            {
+                StreamReader rd = new StreamReader(stream);
+
+                result = rd.ReadToEnd();
+
+                var list = new JavaScriptSerializer().Deserialize<object>(result);
+                rd.Close();
+            }
+
+        }
+
+
 
     }
 }
