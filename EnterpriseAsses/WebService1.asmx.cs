@@ -28,11 +28,6 @@ namespace EnterpriseAsses
 
 
         [WebMethod]
-        public string HelloWorld()
-        {
-            return "Hello World";
-        }
-        [WebMethod]
         public Request RequestXML(Request a)
         {
             Request req = new Request();
