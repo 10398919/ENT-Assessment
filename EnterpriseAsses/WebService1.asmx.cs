@@ -278,8 +278,7 @@ namespace EnterpriseAsses
                 result = rd.ReadToEnd();
 
                 var list = new JavaScriptSerializer().Deserialize<object>(result);
-
-
+                
                 rd.Close();
 
             }
