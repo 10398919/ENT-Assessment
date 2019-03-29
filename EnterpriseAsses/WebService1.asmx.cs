@@ -35,6 +35,7 @@ namespace EnterpriseAsses
             req.cityName = a.cityName;
             req.Adults = a.Adults;
             req.Child = a.Child;
+
             return req;
         }
         [WebMethod]
