@@ -12,6 +12,7 @@ using System.IO;
 using System.Xml.Linq;
 using Newtonsoft.Json;
 using System.Web.Script.Serialization;
+using System.Xml;
 
 namespace EnterpriseAsses
 {
@@ -70,8 +71,10 @@ namespace EnterpriseAsses
         }
 
         [WebMethod]
-        public void getAllCountriesAPI()
+        public string getAllCountriesAPI()
         {
+            //GetCountry country = new GetCountry();
+            XmlDocument xdoc = new XmlDocument();
             //string str = string.Format("https://dev-sandbox-api.airhob.com/sandboxapi/stays/v1/search");
             string str = string.Format("https://restcountries-v1.p.rapidapi.com/all");
             HttpWebRequest reqobj = (HttpWebRequest)WebRequest.Create(str);
@@ -92,6 +95,10 @@ namespace EnterpriseAsses
                 StreamReader rd = new StreamReader(stream);
                 result = rd.ReadToEnd();
                 rd.Close();
+                //xdoc.LoadXml(result);
+
+                return result;
+
             }
 
 

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Script.Serialization;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -11,14 +12,21 @@ namespace EnterpriseAsses
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            WebService1 webService = new WebService1();
+          
+            GetCountry country = new GetCountry();
+            string str= webService.getAllCountriesAPI();
+            var list = new JavaScriptSerializer().Deserialize<object>(str);
+             //foreach ()
 
+            
         }
             
         protected void btnsearch_Click(object sender, EventArgs e)
         {
             Request rq = new Request();
-            rq.cityID = ddlcity.SelectedValue;
-            rq.cityName = ddlcity.SelectedItem.Text;
+            //rq.cityID = ddlcity.SelectedValue;
+           // rq.cityName = ddlcity.SelectedItem.Text;
             rq.Adults = ddlAdult.SelectedItem.Text;
             rq.Child = ddlchild.SelectedItem.Text;
 

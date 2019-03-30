@@ -10,20 +10,10 @@
     <form id="form1" runat="server">
         <div>
 
-            <div>City</div>
+            <div>Country</div>
             <div>
-                <asp:DropDownList ID="ddlcity" runat="server">
-                    <asp:ListItem Value="0">Please Select</asp:ListItem>
-                    <asp:ListItem Value="IRL-DU">Dublin</asp:ListItem>
-                    <asp:ListItem Value="UK-Manu">Manchester</asp:ListItem>
-                    <asp:ListItem Value="UK-LOND">London</asp:ListItem>
-                    <asp:ListItem Value="GR-MUN">Munich</asp:ListItem>
-                    <asp:ListItem Value="GR-BER">Berlin</asp:ListItem>
-                    <asp:ListItem Value="IRL-LIM">Limerick</asp:ListItem>
-                    <asp:ListItem Value="IND-MUM">Mumbai</asp:ListItem>
-                    <asp:ListItem Value="IND-DEL">Delhi</asp:ListItem>
-                    <asp:ListItem Value="UAE-DUB">Dubai</asp:ListItem>
-                    <asp:ListItem Value="UAE-SHA">Sharjah</asp:ListItem>
+                <asp:DropDownList ID="ddlcountry" runat="server">
+                
                 </asp:DropDownList>
 
             </div>
