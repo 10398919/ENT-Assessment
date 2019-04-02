@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Script.Serialization;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Xml;
 
 namespace EnterpriseAsses
 {
@@ -18,19 +19,19 @@ namespace EnterpriseAsses
           
             GetCountry country = new GetCountry();
             string str= webService.getAllCountriesAPI();
-            //var list = new JavaScriptSerializer().Deserialize<object>(str);
-            var list =  JsonConvert.DeserializeObject(str);
-            JObject jObject = JObject.Parse(str);
+           
+            dynamic list =  JsonConvert.DeserializeObject(str);
+          
             int count = ((Newtonsoft.Json.Linq.JContainer)list).Count;
 
-            for ( int i = 0; i <= count; i++  )
+            foreach (var item in list)
             {
-                //((Newtonsoft.Json.Linq.JContainer)(new System.Collections.Generic.Mscorlib_CollectionDebugView<Newtonsoft.Json.Linq.JToken>(((Newtonsoft.Json.Linq.JObject)(new System.Collections.Generic.Mscorlib_CollectionDebugView<Newtonsoft.Json.Linq.JToken>(((Newtonsoft.Json.Linq.JArray)list).ChildrenTokens).Items[0])).ChildrenTokens).Items[0])).First();
-                string name = Convert.ToString(((Newtonsoft.Json.Linq.JContainer)((Newtonsoft.Json.Linq.JContainer)((Newtonsoft.Json.Linq.JContainer)list).First).First).First());
-                ddlcountry.Items.Add(new ListItem("name", "name"));
+                string name = item["name"].Value;
+                ddlcountry.Items.Add(new ListItem(name, name));
             }
 
-            
+
+
         }
             
         protected void btnsearch_Click(object sender, EventArgs e)
@@ -45,6 +46,11 @@ namespace EnterpriseAsses
             //webService.RequestXML(rq);
             Response.Redirect("Results.aspx?cityid=" + rq.cityID);
             //Response.Redirect("WebService1.asmx");
+        }
+
+        protected void ddlcountry_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
