@@ -12,7 +12,7 @@
 
             <div>Country</div>
             <div>
-                <asp:DropDownList ID="ddlcountry" runat="server" OnSelectedIndexChanged="ddlcountry_SelectedIndexChanged" style="margin-bottom: 0px">
+                <asp:DropDownList ID="ddlcountry" runat="server"  style="margin-bottom: 0px">
                 
                 </asp:DropDownList>
 

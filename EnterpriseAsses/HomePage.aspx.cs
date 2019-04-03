@@ -13,6 +13,7 @@ namespace EnterpriseAsses
 {
     public partial class HomePage : System.Web.UI.Page
     {
+        dynamic list;
         protected void Page_Load(object sender, EventArgs e)
         {
             WebService1 webService = new WebService1();
@@ -20,9 +21,8 @@ namespace EnterpriseAsses
             GetCountry country = new GetCountry();
             string str= webService.getAllCountriesAPI();
            
-            dynamic list =  JsonConvert.DeserializeObject(str);
-          
-            int count = ((Newtonsoft.Json.Linq.JContainer)list).Count;
+             list =  JsonConvert.DeserializeObject(str);
+      
 
             foreach (var item in list)
             {
@@ -36,21 +36,29 @@ namespace EnterpriseAsses
             
         protected void btnsearch_Click(object sender, EventArgs e)
         {
-            Request rq = new Request(); 
-            //rq.cityID = ddlcity.SelectedValue;
-           // rq.cityName = ddlcity.SelectedItem.Text;
-            rq.Adults = ddlAdult.SelectedItem.Text;
-            rq.Child = ddlchild.SelectedItem.Text;
+            string CountryName = ddlcountry.SelectedValue;
 
-            //WebService1 webService = new WebService1();
-            //webService.RequestXML(rq);
-            Response.Redirect("Results.aspx?cityid=" + rq.cityID);
-            //Response.Redirect("WebService1.asmx");
+            //var data = from a in list
+            //           where list["name"] = CountryName
+            //           select a["currencies"].Value;
+
+            int count = ((Newtonsoft.Json.Linq.JContainer)list).Count;
+
+            foreach (var item in list)
+            {
+                string name = item["name"].Value;
+
+                if (CountryName == name)
+                {
+
+                }
+
+
+            }
+
+
         }
 
-        protected void ddlcountry_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
+        
     }
 }
