@@ -284,9 +284,8 @@ namespace EnterpriseAsses
 
                 var list = new JavaScriptSerializer().Deserialize<object>(result);
 
-
-
                 rd.Close();
+
 
 
             }
