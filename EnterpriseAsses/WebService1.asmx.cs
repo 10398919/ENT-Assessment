@@ -197,9 +197,9 @@ namespace EnterpriseAsses
         }
 
         [WebMethod]
-        public void getCountryByRegion()
+        public string getCountryByRegion( string region)
         {
-            string region = "Africa";
+           // string region = "Africa";
             
             string str = string.Format("https://restcountries-v1.p.rapidapi.com/region/"+region);
 
@@ -218,6 +218,8 @@ namespace EnterpriseAsses
                
                 var list = new JavaScriptSerializer().Deserialize<object>(result);
                 rd.Close();
+
+                return result;
             }
 
         }

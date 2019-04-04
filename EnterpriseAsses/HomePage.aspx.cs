@@ -16,13 +16,80 @@ namespace EnterpriseAsses
         dynamic list;
         protected void Page_Load(object sender, EventArgs e)
         {
-            WebService1 webService = new WebService1();
+
+            ddlcountry.Items.Insert(0, new ListItem("---Please Select---", "Please Select"));
+        }
+
+        protected void btnsearch_Click(object sender, EventArgs e)
+        {
+            if (rdbregion.Checked == true)
+            {
+                dynamic cnt = Session["Country"];
+                country(cnt);
+            }
           
-            GetCountry country = new GetCountry();
-            string str= webService.getAllCountriesAPI();
+            else if (rdballcountry.Checked == true)
+            {
+                dynamic cnt = Session["Country"];
+                country(cnt);
+
+            }
+
+
            
-             list =  JsonConvert.DeserializeObject(str);
-      
+            
+
+
+        }
+
+        protected void rdballcountry_CheckedChanged(object sender, EventArgs e)
+        {
+            table.Style.Add("display", "none");
+            ddlcountry.Items.Clear();
+            txtregion.Style.Add("display", "none");
+
+            btnregion.Style.Add("display", "none");
+            WebService1 webService = new WebService1();
+
+            GetCountry country = new GetCountry();
+            string str = webService.getAllCountriesAPI();
+
+            list = JsonConvert.DeserializeObject(str);
+
+            Session["Country"] = list;
+
+            foreach (var item in list)
+            {
+                string name = item["name"].Value;
+                ddlcountry.Items.Add(new ListItem(name, name));
+            }
+            ddlcountry.Items.Insert(0, new ListItem("---Please Select---", "Please Select"));
+        }
+
+        protected void rdbregion_CheckedChanged(object sender, EventArgs e)
+        {
+
+            ddlcountry.Items.Clear();
+            table.Style.Add("display", "none");
+            txtregion.Style.Add("display", "block");
+
+            btnregion.Style.Add("display", "block");
+
+            ddlcountry.Items.Insert(0, new ListItem("---Please Select---", "Please Select"));
+        }
+
+        protected void btnregion_Click(object sender, EventArgs e)        
+        {
+
+            WebService1 webService = new WebService1();
+
+            GetCountry country = new GetCountry();
+            country.countryByregion = txtregion.Text;
+            string str = webService.getCountryByRegion(country.countryByregion);
+
+            list = JsonConvert.DeserializeObject(str);
+
+            Session["Country"] = list;
 
             foreach (var item in list)
             {
@@ -30,17 +97,12 @@ namespace EnterpriseAsses
                 ddlcountry.Items.Add(new ListItem(name, name));
             }
 
-
-
         }
-            
-        protected void btnsearch_Click(object sender, EventArgs e)
+
+        public void country(dynamic list)
         {
             string CountryName = ddlcountry.SelectedValue;
-
-            //var data = from a in list
-            //           where list["name"] = CountryName
-            //           select a["currencies"].Value;
+            GetCountry gt = new GetCountry();
 
             int count = ((Newtonsoft.Json.Linq.JContainer)list).Count;
 
@@ -50,15 +112,35 @@ namespace EnterpriseAsses
 
                 if (CountryName == name)
                 {
+                    gt.CountryName = name;
+                    gt.callingCodes = item["callingCodes"][0].Value;
+                    gt.capital = item["capital"].Value;
+                    gt.region = item["region"].Value;
+                    gt.subregion = item["subregion"].Value;
+                    gt.population = item["population"].Value;
+                    gt.currencies = item["currencies"][0].Value;
+                    gt.area = item["area"].Value;
+                    gt.lat = item["latlng"][0].Value;
+                    gt.longt = item["latlng"][1].Value;
+
+                    countname.Text = gt.CountryName;
+                    tdcapital.Text = gt.capital;
+                    tdregion.Text = gt.region;
+                    tdsubregion.Text = gt.subregion;
+                    tdArea.Text = Convert.ToString(gt.area);
+                    tdpop.Text = Convert.ToString(gt.population);
+                    tdlat.Text = Convert.ToString(gt.lat);
+                    logt.Text = Convert.ToString(gt.longt);
+                    curr.Text = Convert.ToString(gt.currencies);
+                    tdcallin.Text = gt.callingCodes;
+
+                    table.Style.Add("display", "block");
+                    break;
 
                 }
 
 
             }
-
-
         }
-
-        
     }
 }
