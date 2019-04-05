@@ -49,6 +49,8 @@
         <br />
         <div>
             <asp:Button ID="btnsearch" runat="server" Text="Button" OnClick="btnsearch_Click" /></div>
+        <br />
+        <asp:button runat="server" id="btncurrency" Text="Currency Converter" OnClick="btncurrencyconvert_Click" />  
     </form>
 </body>
 </html>
