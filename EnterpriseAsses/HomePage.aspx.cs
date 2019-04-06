@@ -142,5 +142,13 @@ namespace EnterpriseAsses
 
             }
         }
+
+
+        protected void btncurrencyconvert_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("Results.aspx");
+
+
+        }
     }
 }
