@@ -263,12 +263,12 @@ namespace EnterpriseAsses
 
 
         [WebMethod]
-        public void Currency()
+        public string Currency(string from, string to)
         {
             //string region = "Africa";
 
-            //string str = string.Format("https://api.exchangeratesapi.io/latest?base=INR&symbols=USD");
-            string str = string.Format("https://restcountries.eu/rest/v2/all");
+            string str = string.Format("https://api.exchangeratesapi.io/latest?base="+from+"&symbols="+to);
+           // string str = string.Format("https://restcountries.eu/rest/v2/all");
             //string str = string.Format("http://data.fixer.io/api/latest?access_key=d45c2ead2e66ec108083fe9a90eaf39f&base&symbols=USD,AUD,CAD,PLN,MXN");
 
             HttpWebRequest reqobj = (HttpWebRequest)WebRequest.Create(str);
@@ -289,7 +289,7 @@ namespace EnterpriseAsses
 
                 rd.Close();
 
-
+                return result;
 
             }
 
