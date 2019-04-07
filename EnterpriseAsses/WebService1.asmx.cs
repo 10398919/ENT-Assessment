@@ -13,7 +13,8 @@ using System.Xml.Linq;
 using Newtonsoft.Json;
 using System.Web.Script.Serialization;
 using System.Xml;
-
+using System.Web.UI;
+using System.Web.UI.WebControls;
 namespace EnterpriseAsses
 {
     /// <summary>
@@ -73,34 +74,44 @@ namespace EnterpriseAsses
         [WebMethod]
         public string getAllCountriesAPI()
         {
-            //GetCountry country = new GetCountry();
-            XmlDocument xdoc = new XmlDocument();
-            //string str = string.Format("https://dev-sandbox-api.airhob.com/sandboxapi/stays/v1/search");
-            string str = string.Format("https://restcountries-v1.p.rapidapi.com/all");
-            HttpWebRequest reqobj = (HttpWebRequest)WebRequest.Create(str);
-            reqobj.Headers.Add("X-RapidAPI-Key", "e09fb1335dmsheb8f4e795507706p179b69jsn0fb20cfa8d25");
-            reqobj.Method = "GET";
-            reqobj.ContentType = "application/json;charset=utf-8";
-            HttpWebResponse res = null;
-
-            //string reqparam = "{ \"City\": \"Manchester\", \"Country\": \"United Kingdom\", \"Latitude\": \"\", \"Longitude\": \"\", \"FromDate\": \"2018-04-23\", \"ToDate\": \"2018-04-24\", \"ClientNationality\": \"IN\", \"Currency\": \"USD\", \"IsAddress\":\"false\", \"IsDescription\":\"false\", \"IsFacility\":\"false\", \"Occupancies\": [ { \"NoOfAdults\": 1, \"ChildrenAges\": [ 5, 7 ]}, { \"NoOfAdults\": 2 } ] }";
-            //reqobj.UserAgent = "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.153 Safari/537.36";
-            //reqobj.Headers.Add("HOTEL", "42f1d6eb-1998-4");
-
-
-            var response = (HttpWebResponse)reqobj.GetResponse();
             string result = null;
-            using (Stream stream = (response.GetResponseStream()))
+            try
             {
-                StreamReader rd = new StreamReader(stream);
-                result = rd.ReadToEnd();
-                rd.Close();
-                //xdoc.LoadXml(result);
+                //GetCountry country = new GetCountry();
+                XmlDocument xdoc = new XmlDocument();
+                //string str = string.Format("https://dev-sandbox-api.airhob.com/sandboxapi/stays/v1/search");
+                string str = string.Format("https://restcountries-v1.p.rapidapi.com/all");
+                HttpWebRequest reqobj = (HttpWebRequest)WebRequest.Create(str);
+                reqobj.Headers.Add("X-RapidAPI-Key", "e09fb1335dmsheb8f4e795507706p179b69jsn0fb20cfa8d25");
+                reqobj.Method = "GET";
+                reqobj.ContentType = "application/json;charset=utf-8";
+                HttpWebResponse res = null;
 
-                return result;
+                //string reqparam = "{ \"City\": \"Manchester\", \"Country\": \"United Kingdom\", \"Latitude\": \"\", \"Longitude\": \"\", \"FromDate\": \"2018-04-23\", \"ToDate\": \"2018-04-24\", \"ClientNationality\": \"IN\", \"Currency\": \"USD\", \"IsAddress\":\"false\", \"IsDescription\":\"false\", \"IsFacility\":\"false\", \"Occupancies\": [ { \"NoOfAdults\": 1, \"ChildrenAges\": [ 5, 7 ]}, { \"NoOfAdults\": 2 } ] }";
+                //reqobj.UserAgent = "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.153 Safari/537.36";
+                //reqobj.Headers.Add("HOTEL", "42f1d6eb-1998-4");
+
+
+                var response = (HttpWebResponse)reqobj.GetResponse();
+               
+                using (Stream stream = (response.GetResponseStream()))
+                {
+                    StreamReader rd = new StreamReader(stream);
+                    result = rd.ReadToEnd();
+                    rd.Close();
+                    //xdoc.LoadXml(result);
+
+                    return result;
+
+                }
 
             }
 
+            catch (Exception ex)
+            {
+                return result;
+            }
+          
 
 
 
@@ -199,28 +210,38 @@ namespace EnterpriseAsses
         [WebMethod]
         public string getCountryByRegion( string region)
         {
-           // string region = "Africa";
-            
-            string str = string.Format("https://restcountries-v1.p.rapidapi.com/region/"+region);
-
-            HttpWebRequest reqobj = (HttpWebRequest)WebRequest.Create(str);
-            reqobj.Headers.Add("X-RapidAPI-Key", "e09fb1335dmsheb8f4e795507706p179b69jsn0fb20cfa8d25");
-            reqobj.Method = "GET";
-            reqobj.ContentType = "application/json;charset=utf-8";
-            HttpWebResponse res = null;
-            var response = (HttpWebResponse)reqobj.GetResponse();
             string result = null;
-            using (Stream stream = (response.GetResponseStream()))
+            try
             {
-                StreamReader rd = new StreamReader(stream);
+                // string region = "Africa";
 
-                result = rd.ReadToEnd();
+                string str = string.Format("https://restcountries-v1.p.rapidapi.com/region/" + region);
+
+                HttpWebRequest reqobj = (HttpWebRequest)WebRequest.Create(str);
+                reqobj.Headers.Add("X-RapidAPI-Key", "e09fb1335dmsheb8f4e795507706p179b69jsn0fb20cfa8d25");
+                reqobj.Method = "GET";
+                reqobj.ContentType = "application/json;charset=utf-8";
+                HttpWebResponse res = null;
+                var response = (HttpWebResponse)reqobj.GetResponse();
                
-                var list = new JavaScriptSerializer().Deserialize<object>(result);
-                rd.Close();
+                using (Stream stream = (response.GetResponseStream()))
+                {
+                    StreamReader rd = new StreamReader(stream);
 
+                    result = rd.ReadToEnd();
+
+                    var list = new JavaScriptSerializer().Deserialize<object>(result);
+                    rd.Close();
+
+                    return result;
+                }
+            }
+            catch(Exception ex)
+            {
                 return result;
             }
+
+        
 
         }
 
