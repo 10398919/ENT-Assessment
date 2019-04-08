@@ -16,7 +16,8 @@
             <asp:radiobutton runat="server" GroupName="region" Text="Region" ID="rdbregion" AutoPostBack="true" OnCheckedChanged="rdbregion_CheckedChanged"></asp:radiobutton>
 
             <asp:radiobutton runat="server" GroupName="region" Text="Get all Countries" AutoPostBack="true" ID="rdballcountry" OnCheckedChanged="rdballcountry_CheckedChanged"></asp:radiobutton>
-
+            <br />
+            <br />
             <asp:TextBox ID="txtregion" runat="server" style="display:none"></asp:TextBox>
             <br />
             <asp:Button ID="btnregion" runat="server" Text="GO" style="display:none" OnClick="btnregion_Click"  />

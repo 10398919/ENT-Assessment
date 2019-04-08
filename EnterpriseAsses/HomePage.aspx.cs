@@ -16,7 +16,7 @@ namespace EnterpriseAsses
         dynamic list;
         protected void Page_Load(object sender, EventArgs e)
         {
-            ddlcountry.Items.Clear();
+           // ddlcountry.Items.Clear();
             ddlcountry.Items.Insert(0, new ListItem("---Please Select---", "Please Select"));
         }
 
@@ -27,7 +27,8 @@ namespace EnterpriseAsses
                 if (ddlcountry.SelectedValue == "Please Select")
                 {
                     ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Please select country from dropdown')", true);
-                   
+                    ddlcountry.Items.Clear();
+                    ddlcountry.Items.Insert(0, new ListItem("---Please Select---", "Please Select"));
                 }
                 else
                 {
@@ -38,7 +39,7 @@ namespace EnterpriseAsses
                     }
 
                     else if (rdballcountry.Checked == true)
-                    {
+                   {
                         dynamic cnt = Session["Country"];
                         country(cnt);
 
@@ -124,6 +125,8 @@ namespace EnterpriseAsses
                 if (string.IsNullOrEmpty(txtregion.Text))
                 {
                     ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Please enter region')", true);
+                    ddlcountry.Items.Clear();
+                    ddlcountry.Items.Insert(0, new ListItem("---Please Select---", "Please Select"));
                 }
                 else
                 {
@@ -158,6 +161,8 @@ namespace EnterpriseAsses
             catch(Exception ex)
             {
                 ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Something went wrong...Please select another country ')", true);
+                ddlcountry.Items.Clear();
+                ddlcountry.Items.Insert(0, new ListItem("---Please Select---", "Please Select"));
             }
          
 
