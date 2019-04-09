@@ -94,7 +94,6 @@ namespace EnterpriseAsses
             {
                 StreamReader rd = new StreamReader(stream);
                 result = rd.ReadToEnd();
-                
                 rd.Close();
                 //xdoc.LoadXml(result);
 
