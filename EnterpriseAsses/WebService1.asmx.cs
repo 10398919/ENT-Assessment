@@ -209,33 +209,41 @@ namespace EnterpriseAsses
         [WebMethod]
         public string Currency(string from, string to)
         {
-            //string region = "Africa";
-
-            string str = string.Format("https://api.exchangeratesapi.io/latest?base="+from+"&symbols="+to);
-           // string str = string.Format("https://restcountries.eu/rest/v2/all");
-            //string str = string.Format("http://data.fixer.io/api/latest?access_key=d45c2ead2e66ec108083fe9a90eaf39f&base&symbols=USD,AUD,CAD,PLN,MXN");
-
-            HttpWebRequest reqobj = (HttpWebRequest)WebRequest.Create(str);
-            // reqobj.Headers.Add("X-RapidAPI-Key", "e09fb1335dmsheb8f4e795507706p179b69jsn0fb20cfa8d25");
-            reqobj.Method = "GET";
-            reqobj.ContentType = "application/json;charset=utf-8";
-            HttpWebResponse res = null;
-            var response = (HttpWebResponse)reqobj.GetResponse();
             string result = null;
-            using (Stream stream = (response.GetResponseStream()))
+            //string region = "Africa";
+            try
             {
-                StreamReader rd = new StreamReader(stream);
+                string str = string.Format("https://api.exchangeratesapi.io/latest?base=" + from + "&symbols=" + to);
+                // string str = string.Format("https://restcountries.eu/rest/v2/all");
+                //string str = string.Format("http://data.fixer.io/api/latest?access_key=d45c2ead2e66ec108083fe9a90eaf39f&base&symbols=USD,AUD,CAD,PLN,MXN");
 
-                result = rd.ReadToEnd();
+                HttpWebRequest reqobj = (HttpWebRequest)WebRequest.Create(str);
+                // reqobj.Headers.Add("X-RapidAPI-Key", "e09fb1335dmsheb8f4e795507706p179b69jsn0fb20cfa8d25");
+                reqobj.Method = "GET";
+                reqobj.ContentType = "application/json;charset=utf-8";
+                HttpWebResponse res = null;
+                var response = (HttpWebResponse)reqobj.GetResponse();
+              
+                using (Stream stream = (response.GetResponseStream()))
+                {
+                    StreamReader rd = new StreamReader(stream);
 
-                var list = new JavaScriptSerializer().Deserialize<object>(result);
+                    result = rd.ReadToEnd();
+
+                    var list = new JavaScriptSerializer().Deserialize<object>(result);
 
 
-                rd.Close();
+                    rd.Close();
 
-                return result;
+                    return result;
 
+                }
             }
+            catch (Exception ex)
+            {
+                return result;
+            }
+            
 
         }
 

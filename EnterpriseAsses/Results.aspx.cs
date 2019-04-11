@@ -38,42 +38,72 @@ namespace EnterpriseAsses
             string ToCountry = ddlToCountry.SelectedValue;
             string From = string.Empty;
             string To = string.Empty;
-            foreach (var item in list)
+
+            if (FromCountry != "Please Select")
             {
-                string name = item["name"].Value;
 
-                if (FromCountry == name)
+                if (ToCountry != "Please Select")
                 {
-                    From = item["currencies"][0].Value;
-                }
+                    foreach (var item in list)
+                    {
+                        string name = item["name"].Value;
 
-                if (ToCountry == name)
+                        if (FromCountry == name)
+                        {
+                            From = item["currencies"][0].Value;
+                        }
+
+                        if (ToCountry == name)
+                        {
+                            To = item["currencies"][0].Value;
+                        }
+
+
+
+                    }
+
+                    WebService1 webService = new WebService1();
+                    string str = webService.Currency(From, To);
+                    if (!String.IsNullOrEmpty(str))
+                    {
+
+                        dynamic amt = JsonConvert.DeserializeObject(str);
+
+                        double convertedamt = amt["rates"][To].Value;
+                        txtconvertamount.Text = Convert.ToString(convertedamt);
+                        if (!String.IsNullOrEmpty(txtamount.Text))
+                        {
+                            if (txtamount.Text != "0")
+                            {
+                                double originalamt = Convert.ToDouble((Convert.ToInt32(txtamount.Text)) * (convertedamt));
+
+                                txtconvertamount.Text = Convert.ToString(originalamt);
+                                txtconvertamount.Text = String.Format("{0:0.00}", originalamt);
+                            }
+
+
+                        }
+                        else
+                        {
+                            txtconvertamount.Text = String.Format("{0:0.00}", convertedamt);
+                        }
+                    }
+                    else
+                    {
+                        ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Something went wrong...Please select another country ')", true);
+                    }
+
+
+                }
+                else
                 {
-                    To = item["currencies"][0].Value;
+                    ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Please select country ')", true);
                 }
-
-
 
             }
-
-            WebService1 webService = new WebService1();
-            string str = webService.Currency(From, To);
-
-            dynamic amt = JsonConvert.DeserializeObject(str);
-
-            double convertedamt = amt["rates"][To].Value;
-            txtconvertamount.Text = Convert.ToString(convertedamt);
-            if (txtamount.Text != "")
+            else
             {
-                if (txtamount.Text != "0")
-                {
-                    double originalamt = Convert.ToDouble((Convert.ToInt32(txtamount.Text)) * (convertedamt));
-
-                    txtconvertamount.Text = Convert.ToString(originalamt);
-                    txtconvertamount.Text = String.Format("{0:0.00}", originalamt);
-                }
-
-
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Please select country ')", true);
             }
 
         }
